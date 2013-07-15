@@ -34,6 +34,11 @@ SparseNode *SparseNode_create(int index, int value)
 
 SparseNode * SparseArray_add ( SparseNode * array, int index, int value )
 {
+  if (array == NULL)
+  {
+    array = SparseNode_create(index, value);
+    return array;
+  }
   if (array->index > index)
   {
     if(array->left != NULL)
@@ -58,7 +63,7 @@ SparseNode * SparseArray_add ( SparseNode * array, int index, int value )
   }
   else if (array->index == index)
   {array->value = value;}
-
+  
   return array;
 }
 
@@ -73,6 +78,12 @@ SparseNode * SparseArray_add ( SparseNode * array, int index, int value )
 SparseNode *SparseArray_build(int * indicies, int * values, int length)
 {
   SparseNode * array = NULL;
+  int i = 0;
+  
+  for (i = 0; i < length; i++)
+  {
+    array = SparseArray_add(array, indicies[i], values[i]);
+  }
   return array;
 }
 
