@@ -161,7 +161,54 @@ SparseNode * SparseArray_getNode(SparseNode * array, int index )
 */
 SparseNode * SparseArray_remove ( SparseNode * array, int index )
 {
-  return array ;
+  SparseNode * temp = NULL;
+  int temp2 = 0;
+  
+  if (array == NULL)
+  {
+    return NULL;
+  }
+  
+  if (array->index > index)
+  {
+    array->left = SparseArray_remove(array->left, index);
+  }
+  
+  if (array->index < index)
+  {
+    array->right = SparseArray_remove(array->right, index);
+  }
+  
+  if (array->left == NULL && array->right == NULL)
+  {
+    free(array);
+    return NULL;
+  }
+  
+  if (array->left != NULL && array->right == NULL)
+  {
+    temp = array->left;
+    free(array);
+    return temp;
+  }
+  
+  if (array->left == NULL && array->right != NULL)
+  {
+    temp = array->right;
+    free(array);
+    return temp;
+  }
+  
+  if (array->left != NULL && array->right != NULL)
+  {
+    temp2 = SparseArray_getMin(array->right);
+    temp = SparseArray_getNode(array->right, temp2);
+    array->index = temp->index;
+    array->value = temp->value;
+    free(temp);
+    return array;
+  }
+  return array;
 }
 
 /* The function makes a copy of the input sparse array 
