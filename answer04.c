@@ -198,7 +198,7 @@ SparseNode * SparseArray_remove ( SparseNode * array, int index )
     free(array);
     return temp;
   }
-  
+//this part may be a problem  
   if (array->left != NULL && array->right != NULL)
   {
     temp2 = SparseArray_getMin(array->right);
@@ -215,9 +215,33 @@ SparseNode * SparseArray_remove ( SparseNode * array, int index )
  * and it returns a new copy. 
  */
 
+void copy_helper (SparseNode * array, int * indicies, int * values, int * sum)
+{
+  if (array == NULL)
+  {
+    return;
+  }
+  indicies[*sum] = array->index;
+  values[*sum] = array->value;
+  (*sum)++;
+  
+  copy_helper(array->left, indicies, values, sum);
+  copy_helper(array->right, indicies, values, sum);
+}
+
+
 SparseNode * SparseArray_copy(SparseNode * array)
 {
-  return NULL;
+  SparseNode * copy = NULL;
+  int * indicies = NULL;
+  int * values = NULL;
+  int sum = 0;
+  
+  copy_helper(array, indicies, values, &sum);
+  
+  copy = SparseArray_build(indicies, values, sum);
+     
+  return copy;
 }
 
 /* Merge array_1 and array_2, and return the result array. 
