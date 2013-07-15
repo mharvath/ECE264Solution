@@ -41,29 +41,16 @@ SparseNode * SparseArray_add ( SparseNode * array, int index, int value )
   }
   if (array->index > index)
   {
-    if(array->left != NULL)
-    {
-      SparseArray_add (array->left, index, value);
-    }
-    else
-    {
-      array->left = SparseNode_create(index, value);
-    }
+    SparseArray_add (array->left, index, value);
   }
   else if (array->index < index)
   {
-    if(array->right != NULL)
-    {
-      SparseArray_add (array->right, index, value);
-    }
-    else
-    {
-      array->right = SparseNode_create(index, value);
-    }
+    SparseArray_add (array->right, index, value);
   }
   else if (array->index == index)
-  {array->value = value;}
-  
+  {
+    array->value = value;
+  }
   return array;
 }
 
