@@ -80,7 +80,17 @@ SparseNode *SparseArray_build(int * indicies, int * values, int length)
  */
 void SparseArray_destroy ( SparseNode * array )
 {
- 
+  if (array == NULL)
+  {
+    return;
+  }
+  
+  SparseArray_destroy(array->left);
+  SparseArray_destroy(array->right);
+  
+  free (array);
+  
+  return;
 }
 /* Retrieve the smallest index in the sparse array. 
  */
