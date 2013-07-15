@@ -96,14 +96,24 @@ void SparseArray_destroy ( SparseNode * array )
  */
 int SparseArray_getMin ( SparseNode * array )
 {
-  return 0;
+  if (array->left == NULL)
+  {
+    return array->index;
+  }
+  
+  return SparseArray_getMin(array->left);
 }
 
 /* Retrieve the largest index in the sparse array. 
  */
 int SparseArray_getMax ( SparseNode * array )
 {
-  return 0;
+  if (array->right == NULL)
+  {
+    return array->index;
+  }
+
+  return SparseArray_getMax(array->right);
 }
 
 /* Retrieve the node associated with a specific index in a sparse
