@@ -124,6 +124,21 @@ int SparseArray_getMax ( SparseNode * array )
  */
 SparseNode * SparseArray_getNode(SparseNode * array, int index )
 {
+  if (array->index == index)
+  {
+    return array;
+  }
+  
+  if (array->index > index && array->left != NULL)
+  {
+    return SparseArray_getNode(array->left, index);
+  }
+  
+  if (array->index > index && array->right != NULL)
+  {
+    return SparseArray_getNode(array->right, index);
+  }
+  
   return NULL;
 }
 
