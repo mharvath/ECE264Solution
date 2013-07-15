@@ -13,7 +13,7 @@ SparseNode *SparseNode_create(int index, int value)
 {
   SparseNode * one_node = NULL;
   
-  malloc(sizeof(SparseNode));
+  one_node = malloc(sizeof(SparseNode));
   
   one_node->index = index;
   one_node->value = value;
@@ -34,7 +34,32 @@ SparseNode *SparseNode_create(int index, int value)
 
 SparseNode * SparseArray_add ( SparseNode * array, int index, int value )
 {
-  return array ;
+  if (array->index > index)
+  {
+    if(array->left != NULL)
+    {
+      SparseArray_add (array->left, index, value);
+    }
+    else
+    {
+      array->left = SparseNode_create(index, value);
+    }
+  }
+  else if (array->index < index)
+  {
+    if(array->right != NULL)
+    {
+      SparseArray_add (array->right, index, value);
+    }
+    else
+    {
+      array->right = SparseNode_create(index, value);
+    }
+  }
+  else if (array->index == index)
+  {array->value = value;}
+
+  return array;
 }
 
 /* Build a sparse array from given indices and values with specific length.
